@@ -1,13 +1,6 @@
-from dataclasses import dataclass
-from typing import Callable, List, Any
+from typing import List
 
-@dataclass
-class KeyValueProperty:
-    name: str
-    key: str
-    valueGetter: Callable[[Any], Any] # always receives the instance of the class
-    valueSetter: Callable[[Any], Any] # always receives the instance of the class
-    valueDocumentation: str = None
+from .keyvalueproperty import KeyValueProperty
 
 class KeyValueStore:
     """
