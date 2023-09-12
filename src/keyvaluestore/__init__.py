@@ -27,35 +27,16 @@ class KeyValueStore:
         recipient, # obj.__class__
         kv_property: KeyValueProperty
     ):
-        if kv_property.valueGetter is None:
-            assert (
-                kv_property.key is not None
-            ), f"Cannot use default getter without a key for {kv_property.name}"
-            getter = lambda self: self.get(kv_property.key)
-        else:
-            getter = kv_property.valueGetter
-
-        if kv_property.valueSetter is None:
-            assert (
-                kv_property.key is not None
-            ), f"Cannot use default setter without a key for {kv_property.name}"
-            setter = lambda self, value: self.set(kv_property.key, value)
-        elif kv_property.valueSetter is False:
-            setter = None
-        else:
-            setter = kv_property.valueSetter
-
         setattr(
             recipient,
             kv_property.name,
             property(
-                fget=getter,
-                fset=setter,
+                fget=kv_property.getter,
+                fset=kv_property.setter,
                 fdel=None,
-                doc=kv_property.valueDocumentation,
+                doc=kv_property.documentation,
             ),
         )
-
 
     @staticmethod
     def add_properties(
