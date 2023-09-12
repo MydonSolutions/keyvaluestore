@@ -11,12 +11,13 @@ class KeyValueStore:
     """
 
     def __str__(self):
-        raise NotImplementedError
+        return f"""{self.__class__}: {({
+            attr: getattr(self, attr)
+            for attr in dir(self.__class__)
+            if isinstance(getattr(self.__class__, attr), property)
+        })}"""
 
-    def __hash__(self):
-        raise NotImplementedError
-
-    def get(self, key, fallback = None):
+    def get(self, key, default = None):
         raise NotImplementedError
 
     def set(self, key, values):
